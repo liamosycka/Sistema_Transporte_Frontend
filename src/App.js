@@ -10,13 +10,26 @@ import NavBar from './Components/NavBar'
 
 function App() {
 
+  var gapi=window.gapi
+  var CLIENT_ID="198772170824-pamhjldp529hje6ocisahaa6ci6mvsto.apps.googleusercontent.com"
+  var API_KEY="AIzaSyCkvR9CjVOTk23hayO5azH2_DArjjcFVic"
+  var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
+  var SCOPES = "https://www.googleapis.com/auth/calendar";
+        // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+  
+
+
   const [nombre, setNombre] = useState("Nombre_X")
   const [solicitud, setSolicitud] = useState()
   const [localidades, setLocalidades] = useState()
 
+  // Authorization scopes required by the API; multiple scopes can be
+  // included, separated by spaces.
+
   useEffect(() => {
     //se ejecuta 1 sola vez al ingresar a la página.
-
+    
     async function obtenerLocalidades() {
 
       const res = await getLocalidades()
@@ -24,6 +37,7 @@ function App() {
       setLocalidades(res.data)
     }
     obtenerLocalidades()
+    
   }, []
 
   )
@@ -32,14 +46,69 @@ function App() {
     setSolicitud(res.data)
   }
 
+  const agregarEvento= ()=>{
+    console.log("en agregar evento")
+    gapi.load('client:auth2', ()=>{
+      console.log('loaded client')
+
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES,
+      })
+
+      gapi.client.load('calendar', 'v3', ()=> console.log('lets go!'))
+
+      gapi.auth2.getAuthInstance().signIn().then(()=>{
+        var event = {
+          'summary': 'Viaje a Rincón',
+          'location': '800 Howard St., San Francisco, CA 94103',
+          'description': 'A chance to hear more about Google\'s developer products.',
+          'start': {
+            'dateTime': '2021-11-5T09:00:00-07:00',
+            'timeZone': 'America/Los_Angeles'
+          },
+          'end': {
+            'dateTime': '2021-11-5T09:00:00-10:00',
+            'timeZone': 'America/Los_Angeles'
+          },
+          'recurrence': [
+            'RRULE:FREQ=DAILY;COUNT=2'
+          ],
+          'attendees': [
+            {'email': 'lpage@example.com'},
+            {'email': 'sbrin@example.com'}
+          ],
+          'reminders': {
+            'useDefault': false,
+            'overrides': [
+              {'method': 'email', 'minutes': 24 * 60},
+              {'method': 'popup', 'minutes': 10}
+            ]
+          }
+        };
+
+        var request = gapi.client.calendar.events.insert({
+          'calendarId': 'primary',
+          'resource': event
+        })
+        request.execute(event =>{
+          window.open(event.htmlLink)
+        })
+      })
+      
+    })
+  }
+
 
   return (
     <Fragment>
       <NavBar />
-      <Button onClick={() => obtenerSolicitud("S1")}>
+      <Button onClick={() => obtenerSolicitud("S3")}>
         Tocar
       </Button>
-      <p>Solicitud: {solicitud ? solicitud.remitente : " No hay Solicitud"}</p>
+      <p>Solicitud: {solicitud ? solicitud.destinatario : " No hay Solicitud"}</p>
       <select>
         <option>***SELECCIONE***</option>
         {
@@ -65,7 +134,10 @@ function App() {
         <br />
         <Form.Control size="sm" type="text" placeholder="Small text" />
       </>
+    <Button onClick={()=> agregarEvento()}>Agregar Evento a Calendar</Button>
     </Fragment>
+
+    
   );
 }
 
