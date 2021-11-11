@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-
+import EventInfo from '../Components/EventInfo'
 function Calendar() {
     var gapi = window.gapi;
     var CLIENT_ID = process.env.REACT_APP_GAPI_CLIENT_ID;
@@ -9,6 +9,9 @@ function Calendar() {
     var SCOPES = process.env.REACT_APP_GAPI_SCOPES
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
+
+    const [eventos, setEventos] = useState("Ningun evento")
+
     const agregarEvento = () => {
         console.log("en agregar evento")
         gapi.load('client:auth2', () => {
@@ -59,12 +62,66 @@ function Calendar() {
                 request.execute(event => {
                     window.open(event.htmlLink)
                 })
+
+
             })
 
         })
     }
+
+    const getEventos = () => {
+        gapi.load('client:auth2', () => {
+            console.log('loaded client')
+
+            gapi.client.init({
+                apiKey: API_KEY,
+                clientId: CLIENT_ID,
+                discoveryDocs: DISCOVERY_DOCS,
+                scope: SCOPES,
+            })
+
+            gapi.client.load('calendar', 'v3', () => console.log('lets go!'))
+
+            gapi.auth2.getAuthInstance().signIn().then(() => {
+                console.log("antes del list")
+
+                gapi.client.calendar.events.list({
+                    'calendarId': 'primary',
+                    'maxResults': 10,
+                    'timeMin': (new Date()).toISOString(),
+                    'showDeleted': false,
+                    'singleEvents': true,
+                    'orderBy': 'startTime'
+                }).then(response => {
+                    console.log("en el then de response")
+                    const events = response.result.items
+                    setEventos(events)
+                    const result = response.result
+                    const respuesta = response
+
+                })
+            })
+        })
+    }
+
+    const generarEventsInfo = () => {
+        for (var i = 0; i < eventos.length; i++) {
+            var event = eventos[i];
+            var start = event.start.dateTime || event.start.date;
+            console.log('%s - %s', start, event.summary);
+        }
+    }
     return (
-        <Button onClick={() => agregarEvento()}>Agregar Evento a Calendar</Button>
+        <Fragment>
+
+            <Button onClick={() => agregarEvento()}>Agregar Evento a Calendar</Button>
+            <Button onClick={() => getEventos()}>Obtener Eventos</Button>
+            <Button onClick={() => generarEventsInfo()}>Generar Events Info</Button>
+            <EventInfo evento={eventos ? eventos[0]: ""} />
+            <EventInfo evento={eventos ? eventos[1]: ""} />
+            <EventInfo evento={eventos ? eventos[2]: ""} />
+            <EventInfo evento={eventos ? eventos[3]: ""} />
+        </Fragment>
     )
 }
 export default Calendar;
