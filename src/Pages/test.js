@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //Importar Componentes
 import MostrarLocalidades from '../Components/MostrarLocalidades'
 import NavBar from '../Components/NavBar'
+import CardTest from '../Components/CardTest';
 //Fin Componentes
 function Test() {
     const [nombre, setNombre] = useState("Nombre_X")
@@ -67,7 +68,6 @@ function Test() {
                 <br />
                 <Form.Control size="sm" type="text" placeholder="Small text" />
             </>
-
         </Fragment>
     )
 }

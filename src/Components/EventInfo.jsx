@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 const EventInfo = (props) => {
     const [event, setEvent] = useState("Sin Evento");
     const cargarEvento= ()=>{
-        setEvent(props.evento ? props.evento.summary: "Todavía no hay Evento")
+        setEvent(props.evento.summary ? props.evento.summary: "Todavía no hay Evento")
     }
     return (
         <Fragment>

@@ -12,11 +12,32 @@ import MostrarLocalidades from './Components/MostrarLocalidades';
 import NavBar from './Components/NavBar';
 import Rutas from './rutas';
 //Fin Componentes
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import purple from '@mui/material/colors/purple';
+
+const theme = createTheme({
+  palette: {
+    type:'light',
+    primary: {
+      main: '#212121'
+    },
+    secondary: {
+      main: '#ffab00'
+    },
+    text: {
+      secondary: 'rgba(255,255,255,0.54)',
+    },
+  },
+});
 
 function App() {
-  
+
   return (
-      <Rutas/>
+    <Fragment>
+      <ThemeProvider theme={theme}>
+        <Rutas />
+      </ThemeProvider>
+    </Fragment>
 
   );
 }
