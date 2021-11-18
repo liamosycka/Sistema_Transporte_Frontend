@@ -60,7 +60,7 @@ const FormSolicitud2 = () => {
 
         }
     }
-    const enviarDatos = async (event) => {
+    const enviarDatosSol = async (event) => {
 
         event.preventDefault()
         postSolicitud(datosSol)
@@ -72,7 +72,7 @@ const FormSolicitud2 = () => {
     return (
         <Fragment>
 
-            <Form id="form_solicitud" onSubmit={enviarDatos}>
+            <Form id="form_solicitud" onSubmit={enviarDatosSol}>
                 <Row>
                     <Col md={{ span: 10, offset: 1 }}>
                         <Card>

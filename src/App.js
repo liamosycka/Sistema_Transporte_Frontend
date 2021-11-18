@@ -1,8 +1,6 @@
 import './App.css';
 
-import Home from './Pages/home';
-import About from './Pages/about';
-import Calendar from './Pages/calendar';
+
 import React, { useState, useEffect, Fragment } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { getSolicitud, getLocalidades } from './Services/Solicitud'

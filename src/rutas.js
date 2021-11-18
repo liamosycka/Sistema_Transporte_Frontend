@@ -1,5 +1,6 @@
 import React from 'react';
-import  Home  from './Pages/home';
+import  Menu  from './Pages/menu';
+import  Inicio  from './Pages/inicio';
 import  About  from './Pages/about';
 import  Calendar  from './Pages/calendar';
 import AltaSolicitud from './Pages/altaSolicitud';
@@ -16,7 +17,8 @@ export const Rutas = () => {
         <Router>
             <AppBar />
             <Routes>
-                <Route path='/' element={<Home />}></Route>
+                <Route path='/' element={<Inicio />}></Route>
+                <Route path='/menu' element={<Menu />}></Route>
                 <Route path='/about' element={<About />}></Route>
                 <Route path='/calendar' element={<Calendar />}></Route>
                 <Route path='/test' element={<Test />}></Route>

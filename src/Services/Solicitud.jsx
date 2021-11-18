@@ -27,7 +27,6 @@ export const getSolicitud = async (id_solicitud) => {
 }
 
 export const postSolicitud = async (datosSol) => {
-    console.log("en post SOl: " + datosSol.destinatario)
     try {
         const cliente = nuevoCliente();
         const id_cliente = "C1";
@@ -48,6 +47,15 @@ export const postSolicitud = async (datosSol) => {
         }
         const response = await cliente.post('solicitudes/alta/' + id_cliente + '/' + parseInt(datosSol.checkbox_destino) + '/', datos_a_enviar)
     } catch (e) {
+        console.error(e)
+    }
+}
+
+export const postBulto= async(datosBulto)=>{
+    try {
+        const cliente = nuevoCliente();
+        const response = await cliente.post('solicitudes/bultos/'+datosBulto.solicitud+'/', datosBulto)
+    } catch (e){
         console.error(e)
     }
 }

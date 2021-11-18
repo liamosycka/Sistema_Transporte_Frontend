@@ -26,17 +26,17 @@ export default function ButtonAppBar() {
                             <Button color="inherit">Inicio</Button>
                         </Link>
 
-                        <Link to="/about">
-                            <Button color="inherit">About</Button>
+                        <Link to="/menu">
+                            <Button color="inherit">Menú</Button>
                         </Link>
                         <Link to="/test">
-                            <Button color="inherit">Test</Button>
+                            <Button color="inherit">Sobre Nosotros</Button>
                         </Link>
                         <Link to="/calendar">
                             <Button color="inherit">Calendar</Button>
                         </Link>
                         <Link to="/altaSolicitud">
-                            <Button color="inherit">Alta Solicitud</Button>
+                            <Button color="inherit">Iniciar Sesión</Button>
                         </Link>
                     </Typography>
                 </Toolbar>
