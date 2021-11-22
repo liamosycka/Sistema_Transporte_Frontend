@@ -104,8 +104,7 @@ const FormSolicitud2 = () => {
                                                             localidades.map((loc, i) =>
                                                             (
                                                                 <option key={i} value={loc.codigo_postal}>
-                                                                    Código postal: {loc.codigo_postal}
-                                                                    Nombre: {loc.nombre}
+                                                                    {loc.nombre} ({loc.codigo_postal})
                                                                 </option>
                                                             )
                                                             ) : "No hay localidades"
@@ -157,8 +156,8 @@ const FormSolicitud2 = () => {
                                                             localidades.map((loc, i) =>
                                                             (
                                                                 <option key={i} value={loc.codigo_postal}>
-                                                                    Código postal: {loc.codigo_postal}
-                                                                    Nombre: {loc.nombre}
+                                                                    {loc.nombre} ({loc.codigo_postal})
+                                                                    
                                                                 </option>
                                                             )
                                                             ) : "No hay localidades"

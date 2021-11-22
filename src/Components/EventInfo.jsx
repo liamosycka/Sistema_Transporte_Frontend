@@ -15,15 +15,10 @@ const EventInfo = (props) => {
                 <Card variant="outlined" sx={{ maxWidth: 345 }}>
                     <CardContent>
                         {props.evento ? props.evento.summary : " No hay Evento todavia "}
-                        {props.evento.start ? props.evento.start.dateTime : " No hay Evento todavia "}
+                        {props.evento.start ? props.evento.start.date : " No hay Evento todavia "}
                     </CardContent>
                 </Card>
-                <Card>
-                    <CardContent>{event}</CardContent>
-                </Card>
-                <Button variant="contained" onClick={() => cargarEvento()}>  
-                    Agregar Evento a Tarjeta 
-                </Button>
+                
             </Stack>
         </Fragment>
     )

@@ -12,11 +12,26 @@ const nuevoCliente = () => {
     })
 }
 
+
+
 export const getSolicitud = async (id_solicitud) => {
-    console.log("en serivicio get Sol: " + id_solicitud)
     try {
         const cliente = nuevoCliente();
         const response = await cliente.get('solicitudes/' + id_solicitud + '/')
+        if (response.status === 200) {
+            return response;
+        }
+    }
+    catch (e) {
+        console.error(e)
+    }
+}
+
+export const getSolicitudes = async () => {
+    try {
+        const cliente = nuevoCliente();
+        const response = await cliente.get('/api/solicitudes/')
+        console.log("solicitudes?: "+response.data[0].id)
         if (response.status === 200) {
             return response;
         }

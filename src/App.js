@@ -1,17 +1,11 @@
 import './App.css';
 
-
 import React, { useState, useEffect, Fragment } from 'react'
-import { Button, Form } from 'react-bootstrap'
-import { getSolicitud, getLocalidades } from './Services/Solicitud'
-import 'bootstrap/dist/css/bootstrap.min.css';
-//Importar Componentes
-import MostrarLocalidades from './Components/MostrarLocalidades';
-import NavBar from './Components/NavBar';
 import Rutas from './rutas';
-//Fin Componentes
+
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import purple from '@mui/material/colors/purple';
+
 
 const theme = createTheme({
   palette: {
@@ -20,7 +14,7 @@ const theme = createTheme({
       main: '#212121'
     },
     secondary: {
-      main: '#ffab00'
+      main: '#ffab40'
     },
     text: {
       secondary: 'rgba(255,255,255,0.54)',

@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Row, Col, } from 'react-bootstrap';
 import EventInfo from '../Components/EventInfo'
+import Container from '@mui/material/Box';
+import { shadows } from '@mui/system';
 function Calendar() {
     var gapi = window.gapi;
     var CLIENT_ID = process.env.REACT_APP_GAPI_CLIENT_ID;
@@ -28,15 +30,15 @@ function Calendar() {
 
             gapi.auth2.getAuthInstance().signIn().then(() => {
                 var event = {
-                    'summary': 'Viaje a Rincón',
+                    'summary': 'Viaje a Allén',
                     'location': '800 Howard St., San Francisco, CA 94103',
                     'description': 'A chance to hear more about Google\'s developer products.',
                     'start': {
-                        'dateTime': '2021-11-12T09:00:00-07:00',
+                        'dateTime': '2021-11-19T09:00:00-07:00',
                         'timeZone': 'America/Los_Angeles'
                     },
                     'end': {
-                        'dateTime': '2021-12-5T09:00:00-10:00',
+                        'dateTime': '2021-11-19T09:00:00-10:00',
                         'timeZone': 'America/Los_Angeles'
                     },
                     'recurrence': [
@@ -113,14 +115,39 @@ function Calendar() {
     }
     return (
         <Fragment>
+            <Container sx={{
+                border: 3,
+                borderColor: 'primary.main', mt: 1, ml: 4, mr: 4,
+                mb: 1, borderRadius: 2, boxShadow: 1,
+                bgcolor: 'primary.main', p: 3,
+                color: 'white'
+            }}>
+                <Row>
+                    <Col md={{ span: 10, offset: 1 }}>
+                        <Col md={{ span: 6 }}>
+                            <Button onClick={() => agregarEvento()}>Agregar Evento a Calendar</Button>
+                        
+                        
+                            <Button onClick={() => getEventos()}>Obtener Eventos</Button>
+                        </Col>
 
-            <Button onClick={() => agregarEvento()}>Agregar Evento a Calendar</Button>
-            <Button onClick={() => getEventos()}>Obtener Eventos</Button>
-            <Button onClick={() => generarEventsInfo()}>Generar Events Info</Button>
-            <EventInfo evento={eventos ? eventos[0]: ""} />
-            <EventInfo evento={eventos ? eventos[1]: ""} />
-            <EventInfo evento={eventos ? eventos[2]: ""} />
-            <EventInfo evento={eventos ? eventos[3]: ""} />
+                        <br></br>
+                        <EventInfo evento={eventos ? eventos[0] : ""} />
+                        <br></br>
+                        <EventInfo evento={eventos ? eventos[1] : ""} />
+                        <br></br>
+                        <EventInfo evento={eventos ? eventos[2] : ""} />
+                        <br></br>
+                        <EventInfo evento={eventos ? eventos[3] : ""} />
+                        <br></br>
+                        <EventInfo evento={eventos ? eventos[4] : ""} />
+                        <br></br>
+                        <EventInfo evento={eventos ? eventos[5] : ""} />
+                        <br></br>
+                    </Col>
+
+                </Row>
+            </Container>
         </Fragment>
     )
 }
