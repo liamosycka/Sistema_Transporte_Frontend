@@ -1,14 +1,9 @@
 import React, { Fragment, useState } from "react";
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 const EventInfo = (props) => {
-    const [event, setEvent] = useState("Sin Evento");
-    const cargarEvento= ()=>{
-        setEvent(props.evento.summary ? props.evento.summary: "Todavía no hay Evento")
-    }
+
     return (
         <Fragment>
             <Stack spacing={2} direction="row">

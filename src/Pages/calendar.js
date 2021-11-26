@@ -2,22 +2,17 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Button, Form, Row, Col, } from 'react-bootstrap';
 import EventInfo from '../Components/EventInfo'
 import Container from '@mui/material/Box';
-import { shadows } from '@mui/system';
 function Calendar() {
     var gapi = window.gapi;
     var CLIENT_ID = process.env.REACT_APP_GAPI_CLIENT_ID;
     var API_KEY = process.env.REACT_APP_GAPI_KEY;
     var DISCOVERY_DOCS = process.env.REACT_APP_GAPI_DISCOVERY
     var SCOPES = process.env.REACT_APP_GAPI_SCOPES
-    // Authorization scopes required by the API; multiple scopes can be
-    // included, separated by spaces.
 
     const [eventos, setEventos] = useState("Ningun evento")
 
     const agregarEvento = () => {
-        console.log("en agregar evento")
         gapi.load('client:auth2', () => {
-            console.log('loaded client')
 
             gapi.client.init({
                 apiKey: API_KEY,
@@ -26,13 +21,13 @@ function Calendar() {
                 scope: SCOPES,
             })
 
-            gapi.client.load('calendar', 'v3', () => console.log('lets go!'))
+            gapi.client.load('calendar', 'v3', () => console.log('cliente cargado'))
 
             gapi.auth2.getAuthInstance().signIn().then(() => {
                 var event = {
-                    'summary': 'Viaje a Allén',
-                    'location': '800 Howard St., San Francisco, CA 94103',
-                    'description': 'A chance to hear more about Google\'s developer products.',
+                    'summary': 'Viaje a Allen',
+                    'location': 'Ruta X',
+                    'description': 'Viaje programado del Chofer CHXX',
                     'start': {
                         'dateTime': '2021-11-19T09:00:00-07:00',
                         'timeZone': 'America/Los_Angeles'
@@ -45,8 +40,7 @@ function Calendar() {
                         'RRULE:FREQ=DAILY;COUNT=2'
                     ],
                     'attendees': [
-                        { 'email': 'lpage@example.com' },
-                        { 'email': 'sbrin@example.com' }
+                        { 'email': 'chofer@example.com' }
                     ],
                     'reminders': {
                         'useDefault': false,
