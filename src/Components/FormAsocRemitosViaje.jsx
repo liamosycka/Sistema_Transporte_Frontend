@@ -26,9 +26,7 @@ const FormAsocRemitosViaje = () => {
   }
 
   async function obtenerViajesFecha(fecha) {
-    console.log("en obtener viaje")
     const res = await getViajesFecha(fecha)
-    console.log("resp: " + res.data)
     setViajes(res.data)
   }
 

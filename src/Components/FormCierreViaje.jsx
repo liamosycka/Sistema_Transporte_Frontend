@@ -1,10 +1,34 @@
 import React, { useState, useEffect, Fragment } from 'react'
 
 import 'bootstrap/dist/css/bootstrap.css';
-import { getSolicitud, getLocalidades, postSolicitud } from '../Services/Solicitud'
+import { getViajesFecha, getCierreViaje } from '../Services/Viaje'
 
 import { Nav, NavItem, NavDropdown, MenuItem, Card, Button, Row, Col, Form, Container, Table } from 'react-bootstrap';
 const FormCierreViaje = () => {
+    const [viajes, setViajes] = useState()
+    const [montoCierre, setMontoCierre] = useState()
+    const [viajeSelec, setViajeSelec]=useState()
+    async function obtenerViajesFecha(fecha) {
+        const res = await getViajesFecha(fecha)
+        res ?  setViajes(res.data):setViajes()
+    }
+    async function cerrarViaje(){
+        console.log("en cerrar viaje con: ",viajeSelec)
+        const res = await getCierreViaje(viajeSelec)
+        res ? console.log("volvio con: ",res.data):console.log("")
+        res ? setMontoCierre(res.data):setMontoCierre()
+    }
+
+    const handleInputChange = (event) => {
+        if (event.target.name == 'fecha_viaje') {
+            obtenerViajesFecha(event.target.value)
+        }
+        if (event.target.name == 'viaje') {
+            setViajeSelec(event.target.value)
+        }
+    }
+
+
     return (
         <Fragment>
             <Form id="form_solicitud">
@@ -14,47 +38,47 @@ const FormCierreViaje = () => {
                             <Col sm={10}>
                                 <Form.Group controlId="select_fecha_cerrar">
                                     <Form.Label>Fecha del viaje</Form.Label>
-                                    <Form.Control type="date" />
+                                    <input id="fecha_viaje" type="date" class="form-control" name="fecha_viaje" onChange={e => handleInputChange(e)}></input>
                                 </Form.Group>
                             </Col>
-                            <Col sm={2}>
-                                <Form.Label>&nbsp;</Form.Label>
-                                <Button variant="primary">Buscar</Button>{' '}
-                            </Col>
-                            <Col sm={12}>
+                            <Col sm={10}>
                                 <Form.Group controlId="select_viaje_cerrar">
                                     <Form.Label>Seleccionar viaje</Form.Label>
-                                    <Form.Select aria-label="Default select example">
-                                    </Form.Select>
+                                    <select id="select_viaje" class='form-control' onChange={handleInputChange} name="viaje">
+                                        <option>***SELECCIONE***</option>
+                                        {
+                                            viajes ?
+                                                viajes.map((viaje, i) =>
+                                                (
+                                                    <option key={i} value={viaje.id}>
+                                                        Viaje: {viaje.id}
+                                                    </option>
+                                                )
+                                                ) : "No hay viajes"
+                                        }
+                                    </select>
                                 </Form.Group>
                             </Col>
                             <Form.Label>&nbsp;</Form.Label>
-                            <Col sm={12}>
-                                <Table striped bordered hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Remito</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tabla_remitos">
-                                        <tr>
-                                            <td>Remito 1</td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            </Col>
-
                         </Row>
                     </Col>
                 </Row>
             </Form>,
+            <Row>
+                <Col md={{ span:2, offset: 1 }}>
+                    <Form.Group controlId="monto?cierre">
+                        <Form.Label>Monto de Cierre</Form.Label>
+                        <input id="nombre_destino" type="text" value={montoCierre ? montoCierre: "0"} className="form-control" onChange={handleInputChange} name="monto_cierre"></input>
+                    </Form.Group>
+                </Col>
+            </Row>
             <br></br>
             <Row>
                 <Col md={{ span: 10, offset: 1 }}>
-                    <Button variant="success">Cerrar viaje</Button>{' '}
+                    <Button onClick={cerrarViaje}variant="success">Cerrar viaje</Button>{' '}
                 </Col>
             </Row>
         </Fragment>
     )
 }
-export default FormCierreViaje
+export default FormCierreViaje;
